@@ -5,11 +5,12 @@ import { MatInputModule }      from '@angular/material/input';
 import { MatButtonModule }     from '@angular/material/button';
 import { MatDividerModule }    from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
+import { HeaderComponent } from '../../header/header.component';
 
 @Component ({
     selector: 'app-post-create',
     standalone: true,
-    imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDividerModule,MatCardModule], 
+    imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDividerModule,MatCardModule,HeaderComponent], 
     templateUrl: './post-create.component.html',
     styleUrls: ['./post-create.component.css']
   
