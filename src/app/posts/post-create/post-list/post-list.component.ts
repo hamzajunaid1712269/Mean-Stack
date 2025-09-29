@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
-import type { Post } from '../../../app';
+import { Post } from './post.model'; 
 
 @Component({
   selector: 'app-post-list',
@@ -11,5 +11,5 @@ import type { Post } from '../../../app';
   imports: [MatCardModule, MatExpansionModule]
 })
 export class PostListComponent {
-  @Input() posts: Post[] = [];    // <-- receive from parent
+  @Input() posts: Post[] = [];
 }
