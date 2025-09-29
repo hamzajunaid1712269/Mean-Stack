@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms'; 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule }      from '@angular/material/input';
@@ -18,14 +18,22 @@ import { MatCardModule } from '@angular/material/card';
 
 export class PostCreateComponent {
 
-    newPost = 'No Content';
-    enteredValue = '';
+    enteredTitle = '';     
+    enteredContent = '';
+    @Output() postCreated = new EventEmitter();
+
+ 
+
 
     onAddPost(): void{
      //  alert('Post Added')
 
      //console.dir(postInput);
-     this.newPost = this.enteredValue;
+     const post = {title: this.enteredTitle,
+                   content: this.enteredContent
+     };
+     this.postCreated.emit(post);
+ 
     }
 
 }

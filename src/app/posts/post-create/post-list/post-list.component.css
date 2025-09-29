@@ -28,3 +28,7 @@
   .accordion-in-card .mat-expansion-panel-header {
     padding: 0 16px;
   }
+
+.compose-card, .posts-card { max-width: 900px; margin: 16px auto; }
+.w-100 { width: 100%; }
+.muted { opacity: 0.6; }
