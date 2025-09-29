@@ -1,0 +1,30 @@
+.posts-card {
+    max-width: 900px;
+    margin: 16px auto;
+    overflow: hidden;           /* clip inner borders/shadows to rounded card */
+    border-radius: 12px;
+  }
+  
+  /* make accordion fit inside card padding */
+  .accordion-in-card {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* remove panel gaps and radius so borders align perfectly */
+  .accordion-in-card .mat-expansion-panel {
+    margin: 0;                  /* kills the default vertical gaps */
+    box-shadow: none;           /* optional: flatter look inside cards */
+    border-radius: 0;           /* so headers line up edge-to-edge */
+  }
+  
+  /* subtle dividers between items */
+  .accordion-in-card .mat-expansion-panel:not(:last-child) {
+    border-bottom: 1px solid rgba(0,0,0,.12);
+  }
+  
+  /* consistent header padding */
+  .accordion-in-card .mat-expansion-panel-header {
+    padding: 0 16px;
+  }
