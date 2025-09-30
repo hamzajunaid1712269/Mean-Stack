@@ -1,22 +1,18 @@
 @if (posts.length > 0) {
   <mat-card>
     <mat-card-content>
-      <mat-accordion multi="true">
+      <mat-accordion>
         @for (post of posts; track $index) {
           <mat-expansion-panel>
             <mat-expansion-panel-header>
-              {{ post.title }}
+              <mat-panel-title>{{ post.title }}</mat-panel-title>
             </mat-expansion-panel-header>
             <p>{{ post.content }}</p>
-            <mat-action-row>
-              <button mat-button color="primary">EDIT</button>
-              <button mat-button color="warn">DELETE</button>
-            </mat-action-row>
           </mat-expansion-panel>
         }
       </mat-accordion>
     </mat-card-content>
   </mat-card>
 } @else {
-  <p class="info-text mat-body-1">No posts added yet!</p>
+  <mat-card><mat-card-content>No posts yet. Write one above!</mat-card-content></mat-card>
 }
