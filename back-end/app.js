@@ -1,6 +1,13 @@
 const express = require('express');
 const helmet = require('helmet');
 const bodyParser = require('body-parser')
+const Post = require('./models/post')
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://127.0.0.1:27017/mean')  // "mean" db will be created on first save
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.error('Mongo connection error:', err));
+
 
 const app = express();
 app.use(bodyParser.json());
@@ -47,19 +54,49 @@ app.use(
 // ---- Routes ----
 
 app.post("/api/posts", (req, res, next) =>{
-  const posts = req.body
+  const posts = new Post({
+   title: req.body.title,
+   content: req.body.content
+  });
+  posts.save();
   console.log(posts);
 res.status(201).json({
   message: 'Post added'
 });
 })
 
-app.get('/api/posts', (req, res) => {
-  const posts = [
-    { id: 'f4344of3',  title: 'First server-side post',  content: 'This is coming from the server' },
-    { id: 'f95344of3', title: 'Second server-side post', content: 'This is coming from the server' },
-  ];
-  res.status(200).json({ message: 'Posts sent', posts });
+app.get('/api/posts', async (req, res, next) => {
+  try {
+    const docs = await Post.find().lean(); // lean() returns plain objects
+    const posts = docs.map(d => ({
+      id: d._id.toString(),   // map Mongo _id -> id for the front-end
+      title: d.title,
+      content: d.content,
+    }));
+    return res.status(200).json({ message: 'Posts sent', posts });
+  } catch (err) {
+    next(err);
+  }
 });
 
+
+app.delete('/api/posts/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    // optional: validate ObjectId (avoids CastError noise)
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: 'Invalid id' });
+    }
+
+    const result = await Post.deleteOne({ _id: id }); // <-- use Post, not this.post
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+
+    res.status(200).json({ message: 'Post deleted' });
+  } catch (err) {
+    next(err);
+  }
+});
 module.exports = app;
