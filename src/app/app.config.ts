@@ -1,20 +1,14 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { provideHttpClient, withFetch /*, withInterceptorsFromDi*/ } from '@angular/common/http';
-
-
+import { ApplicationConfig, provideZonelessChangeDetection } from '@angular/core';
+import { provideRouter, withDebugTracing } from '@angular/router';
+import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { routes } from './app.routes';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
-    provideHttpClient(
-      withFetch(),               
-      // withInterceptorsFromDi(), // <-- optional: if you use DI-registered interceptors
-    ),
-    provideRouter(routes), provideClientHydration(withEventReplay())
-   
-  ]
+    provideHttpClient(withFetch()),
+    provideNoopAnimations(),
+    provideRouter(routes, withDebugTracing()), // <-- optional: logs route matching
+  ],
 };
